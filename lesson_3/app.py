@@ -71,11 +71,31 @@ async def main():
     # else:
     #     logger.success(res)
 
-    tx_hash = '0xf9bd50990974b8107a8ef1a2d2dc79c5de6114b42d5533827068ddccabe35240'
-    tx = Tx(tx_hash=tx_hash)
-    print(tx)
-    print(await tx.parse_params(client=client))
-    print(await tx.decode_input_data(client=client, contract=Contracts.ARBITRUM_WOOFI))
+    # tx_hash = '0xf9bd50990974b8107a8ef1a2d2dc79c5de6114b42d5533827068ddccabe35240'
+    # tx = Tx(tx_hash=tx_hash)
+    # print(tx)
+    # print(await tx.parse_params(client=client))
+    # print(await tx.decode_input_data(client=client, contract=Contracts.ARBITRUM_WOOFI))
+
+    woofi = WooFi(client=client)
+
+    res = await woofi.swap_arbitrum(from_token='ETH', to_token='USDC', amount=TokenAmount(amount=0.001))
+    res = await woofi.swap_arbitrum(from_token='USDC', to_token='ETH')
+
+    res = await woofi.swap_arbitrum(from_token='ETH', to_token='USDT', amount=TokenAmount(amount=0.001))
+    res = await woofi.swap_arbitrum(from_token='USDT', to_token='ETH')
+
+    res = await woofi.swap_arbitrum(from_token='ETH', to_token='WBTC', amount=TokenAmount(amount=0.001))
+    res = await woofi.swap_arbitrum(from_token='WBTC', to_token='ETH')
+
+    res = await woofi.swap_arbitrum(from_token='ETH', to_token='WBTC', amount=TokenAmount(amount=0.002))
+    res = await woofi.swap_arbitrum(from_token='WBTC', to_token='USDT')
+    res = await woofi.swap_arbitrum(from_token='USDT', to_token='ETH')
+
+    if 'Failed' in res:
+        logger.error(res)
+    else:
+        logger.success(res)
 
 
 if __name__ == '__main__':

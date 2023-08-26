@@ -1,12 +1,11 @@
 import asyncio
-from typing import Optional
-
 import aiohttp
+from typing import Optional
 from py_eth_async.client import Client
 from py_eth_async.data.models import TokenAmount
-
 from data.config import logger
 
+STABLE_LIST = ['USDT', 'USDC']
 
 class Base:
     def __init__(self, client: Client):
@@ -66,3 +65,15 @@ class Base:
                     f'{self.client.account.address} | getting {token} price: {e}')
                 await asyncio.sleep(5)
         exit()
+
+    async def get_price(self, token: str, in_token: str):
+        if token in STABLE_LIST:
+            token_price = 1
+        else:
+            token_price = await self.get_token_price(token=token)
+
+        if in_token in STABLE_LIST:
+            return token_price
+        else:
+            in_token_price = await self.get_token_price(token=in_token)
+            return token_price / in_token_price
