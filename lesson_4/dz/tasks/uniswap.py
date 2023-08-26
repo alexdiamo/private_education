@@ -6,22 +6,15 @@
 import json
 import asyncio
 
-from web3 import Web3
 import requests
 from fake_useragent import UserAgent
 import time
 from web3.types import TxParams
 
-from data.config import logger
 from data.models import Contracts
-from py_eth_async.client import Client
 from tasks.base import Base
 
-from pretty_utils.miscellaneous.files import read_json
-from py_eth_async.data.models import Ether, TxArgs, TokenAmount, Networks
-from pretty_utils.type_functions.floats import randfloat
-from data.config import ABIS_DIR
-from pretty_utils.miscellaneous.files import join_path
+from py_eth_async.data.models import TxArgs, TokenAmount, Networks
 
 
 class Uniswap(Base):
@@ -64,6 +57,7 @@ class Uniswap(Base):
         response_json = response.json()
 
         quote = int(response_json['quote']['quote'])
+        slippage = slippage * -1
         amount_with_slippage = int(quote * (100 - slippage) / 100)
         return TokenAmount(
             amount=amount_with_slippage,
@@ -80,7 +74,7 @@ class Uniswap(Base):
         if self.client.network.name != Networks.Arbitrum.name:
             return f'{failed_text}: wrong network ({self.client.network.name})'
 
-        amount_eth = await Uniswap.get_price(amount=amount_geth, slippage=-1)
+        amount_eth = await Uniswap.get_price(amount=amount_geth, slippage=1)
 
         contract = await self.client.contracts.get(contract_address=Contracts.ARBITRUM_UNISWAP_ROUTER)
         # todo: можно добавить проверку баланса
@@ -107,13 +101,3 @@ class Uniswap(Base):
             return f'{amount_eth.Ether} ETH was swapped to {amount_geth.Ether} GETH: {tx.hash.hex()}'
 
         return f'{failed_text}!'
-
-
-# async def main():
-#     res = await Uniswap.get_price(amount=TokenAmount(amount=0.1))
-#     print(res)
-#
-#
-# if __name__ == '__main__':
-#     loop = asyncio.new_event_loop()
-#     loop.run_until_complete(main())

@@ -183,13 +183,3 @@ class Stargate(Base):
                 max_balance = usdc_balance
                 result_network = network
         return result_network
-
-
-# async def main():
-#     from web3 import Web3
-#     res = await Stargate.get_network_with_usdc(address=Web3.to_checksum_address(''))
-#     print(res.name)
-#
-# if __name__ == '__main__':
-#     loop = asyncio.new_event_loop()
-#     loop.run_until_complete(main())

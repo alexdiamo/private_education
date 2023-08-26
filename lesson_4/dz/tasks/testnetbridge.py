@@ -1,6 +1,7 @@
 from typing import Optional
 
 from web3.types import TxParams
+import random
 
 from data.models import Contracts
 from tasks.base import Base

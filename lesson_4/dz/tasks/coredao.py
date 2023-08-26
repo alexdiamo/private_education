@@ -53,12 +53,10 @@ class CoredaoBridge(Base):
             token=Contracts.BSC_USDT.address,
             amountLD=amount.Wei,
             to=self.client.account.address,
-            callParams=(
-                TxArgs(
-                    refundAddress=self.client.account.address,
-                    zroPaymentAddress='0x0000000000000000000000000000000000000000'
-                ).tuple()
-            ),
+            callParams=TxArgs(
+                refundAddress=self.client.account.address,
+                zroPaymentAddress='0x0000000000000000000000000000000000000000'
+            ).tuple(),
             adapterParams='0x'
         )
 
