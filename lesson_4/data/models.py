@@ -35,7 +35,7 @@ class Contracts(Singleton):
     )
 
     POLYGON_STARGATE = RawContract(
-        address='0x45a01e4e04f14f7a4a6702c74187c5f6222033cd', abi=read_json(path=(ABIS_DIR, 'stargate.json'))
+        address='0x53bf833a5d6c4dda888f69c22c88c9f356a41614', abi=read_json(path=(ABIS_DIR, 'stargate.json'))
     )
 
     AVALANCHE_STARGATE = RawContract(
@@ -44,4 +44,32 @@ class Contracts(Singleton):
 
     AVALANCHE_USDC = RawContract(
         address='0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E', abi=DefaultABIs.Token
+    )
+
+    OPTIMISM_STARGATE = RawContract(
+        address='0x4a364f8c717cAAD9A442737Eb7b8A55cc6cf18D8', abi=read_json(path=(ABIS_DIR, 'stargate.json'))
+    )
+
+    OPTIMISM_USDC = RawContract(
+        address='0x7f5c764cbc14f9669b88837ca1490cca17c31607', abi=DefaultABIs.Token
+    )
+
+    BSC_COREDAO = RawContract(
+        address='0x52e75D318cFB31f9A2EdFa2DFee26B161255B233', abi=read_json(path=(ABIS_DIR, 'coredao.json'))
+    )
+
+    BSC_USDT = RawContract(
+        address='0x55d398326f99059ff775485246999027b3197955', abi=DefaultABIs.Token
+    )
+
+    COREDAO_USDT = RawContract(
+        address='0x9Ebab27608bD64AFf36f027049aECC69102a0D1e', abi=DefaultABIs.Token
+    )
+
+    ARBITRUM_UNISWAP = RawContract(
+        address='0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD', abi=read_json(path=(ABIS_DIR, 'uniswap.json'))
+    )
+
+    ARBITRUM_GETH = RawContract(
+        address='0xdd69db25f6d620a7bad3023c5d32761d353d3de9', abi=DefaultABIs.Token
     )

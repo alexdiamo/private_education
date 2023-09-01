@@ -19,11 +19,8 @@ import random
 from typing import Optional
 from web3.types import TxParams
 from web3.contract import AsyncContract
-
 from tasks.base import Base
-from py_eth_async.data.models import TxArgs, TokenAmount
-from py_eth_async.data.models import Networks
-
+from py_eth_async.data.models import TxArgs, TokenAmount, Networks, RawContract
 from data.config import logger
 from data.models import Contracts
 
@@ -48,6 +45,13 @@ class Stargate(Base):
             'usdc_contract': Contracts.POLYGON_USDC,
             'stargate_contract': Contracts.POLYGON_STARGATE,
             'stargate_chain_id': 109,
+            'src_pool_id': 1,
+            'dst_pool_id': 1,
+        },
+        Networks.Optimism.name: {
+            'usdc_contract': Contracts.OPTIMISM_USDC,
+            'stargate_contract': Contracts.OPTIMISM_STARGATE,
+            'stargate_chain_id': 111,
             'src_pool_id': 1,
             'dst_pool_id': 1,
         },
@@ -236,6 +240,3 @@ class Stargate(Base):
 
         except Exception as e:
             return f'{failed_text}: {e}'
-
-
-    # todo: написать функцию поиска usdc по доступным сетям
