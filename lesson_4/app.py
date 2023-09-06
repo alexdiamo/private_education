@@ -54,9 +54,20 @@ async def main():
     #     else:
     #         print(key, val)
 
+    pass
+
+    # task 1
+    # client = Client(private_key=private_key1, network=Networks.Optimism)
+    # stargate = Stargate(client=client)
+    # res = await stargate.send_usdc(
+    #     to_network_name='polygon',
+    #     max_fee=0.5
+    # )
+    # print(res)
 
     # task 2
-    await find_token_with_higher_balance(private_key=private_key1, token_name='USDC')
+    # network = await Stargate.get_network_with_usdc(address='')
+    # print(network)
 
     # task 3
     # client = Client(private_key=private_key1, network=Networks.BSC)

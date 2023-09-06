@@ -20,9 +20,11 @@ from typing import Optional
 from web3.types import TxParams
 from web3.contract import AsyncContract
 from tasks.base import Base
-from py_eth_async.data.models import TxArgs, TokenAmount, Networks, RawContract
+from py_eth_async.data.models import TxArgs, TokenAmount, Networks, Network
+from py_eth_async.client import Client
 from data.config import logger
 from data.models import Contracts
+from eth_typing import ChecksumAddress
 
 
 class Stargate(Base):
@@ -240,3 +242,29 @@ class Stargate(Base):
 
         except Exception as e:
             return f'{failed_text}: {e}'
+
+    @staticmethod
+    async def get_network_with_usdc(address: str) -> Optional[Network]:
+        networks = [
+            Networks.Arbitrum,
+            Networks.Polygon,
+            Networks.Avalanche,
+            Networks.Optimism
+        ]
+
+        network = None
+        balance = TokenAmount(amount=0)
+
+        for _network in networks:
+            usdc_contract = Stargate.contract_data[_network.name]['usdc_contract']
+            client = Client(network=_network)
+            _balance = await client.wallet.balance(token=usdc_contract.address, address=address)
+
+            if float(_balance.Ether) > float(balance.Ether):
+                network = _network
+                balance = _balance
+
+        if balance:
+            print(f'SUCCESS | Higher balance: {balance.Ether} USDC in network {network.name}')
+
+        return network
